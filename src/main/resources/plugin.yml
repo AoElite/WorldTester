@@ -1,0 +1,8 @@
+name: WorldTester
+version: '${version}'
+main: com.aoelite.me.worldtester.WorldTester
+api-version: '1.18'
+load: STARTUP
+commands:
+  worldtester:
+    aliases: [wt]
