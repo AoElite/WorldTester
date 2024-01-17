@@ -16,7 +16,7 @@ public class WorldTesterCommand implements CommandExecutor {
         this.worldManager = worldManager;
     }
 
-    private final String INVALID = ChatColor.GRAY + "/worldloader <start|stop>";
+    private final String INVALID = ChatColor.GRAY + "/worldtester <start|stop>";
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, String[] arguments) {
@@ -33,7 +33,7 @@ public class WorldTesterCommand implements CommandExecutor {
         String first = arguments[0];
         if (first.equalsIgnoreCase("start")) {
             if (arguments.length == 1) {
-                commandSender.sendMessage(ChatColor.GRAY + "/worldloader start <count> [tickspeed]");
+                commandSender.sendMessage(ChatColor.GRAY + "/worldtester start <count> [tickspeed]");
                 return true;
             }
             int number = getNumber(arguments[1]);

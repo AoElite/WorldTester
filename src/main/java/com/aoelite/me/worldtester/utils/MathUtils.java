@@ -1,7 +1,7 @@
 package com.aoelite.me.worldtester.utils;
 
 import java.util.Collection;
-import java.util.concurrent.TimeUnit;
+import java.util.List;
 
 public class MathUtils {
 
@@ -24,6 +24,19 @@ public class MathUtils {
 
     public static double calculateAvg(final Collection<? extends Number> numbers) {
         return numbers.stream().mapToDouble(Number::doubleValue).average().orElse(0D);
+    }
+
+    public static <T extends Number> double getPercentile(List<T> sortedList, double percentile) {
+        double index = (percentile / 100) * (sortedList.size() - 1);
+        int lowerIndex = (int) Math.floor(index);
+        int upperIndex = (int) Math.ceil(index);
+        if (lowerIndex == upperIndex) {
+            return sortedList.get(lowerIndex).doubleValue();
+        }
+        double lowerValue = sortedList.get(lowerIndex).doubleValue();
+        double upperValue = sortedList.get(upperIndex).doubleValue();
+        double fraction = index - lowerIndex;
+        return lowerValue + (upperValue - lowerValue) * fraction;
     }
 
     public static double round(double number, int place) {

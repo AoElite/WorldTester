@@ -12,11 +12,10 @@ public final class WorldTester extends JavaPlugin {
 
     @Getter private static WorldTester instance = null;
 
-    private final WorldManager worldManager = new WorldManager();
-
     @Override
     public void onEnable() {
         instance = this;
+        WorldManager worldManager = new WorldManager();
         // Plugin startup logic
         registerCommand("worldtester", new WorldTesterCommand(worldManager));
     }
@@ -26,14 +25,13 @@ public final class WorldTester extends JavaPlugin {
         // Plugin shutdown logic
     }
 
-    private <T extends CommandExecutor> T registerCommand(String command, T executor) {
+    private <T extends CommandExecutor> void registerCommand(String command, T executor) {
         PluginCommand pluginCommand = getCommand(command);
         if (pluginCommand == null) {
             throw new RuntimeException("The command /" + command + " is not registered in the plugin.yml!");
         }
         pluginCommand.setExecutor(executor);
         if (executor instanceof TabCompleter tabCompleter) pluginCommand.setTabCompleter(tabCompleter);
-        return executor;
     }
 
 }

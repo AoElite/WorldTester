@@ -2,7 +2,7 @@ name: WorldTester
 version: '${version}'
 main: com.aoelite.me.worldtester.WorldTester
 api-version: '1.18'
-load: STARTUP
+load: POSTWORLD
 commands:
   worldtester:
-    aliases: [wt]
+    aliases: [wt, wl, worldloader]
