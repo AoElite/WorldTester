@@ -125,10 +125,11 @@ public class WorldManager {
     }
 
     private void show(String name, List<Long> times) {
-        double average = MathUtils.round(MathUtils.calculateAvg(times), 2);
-        double sd = MathUtils.round(MathUtils.calculateSD(times), 2);
-        double percentile90 = MathUtils.round(MathUtils.getPercentile(times, 90), 2);
-        double percentile99 = MathUtils.round(MathUtils.getPercentile(times, 99), 2);
+        final double sum = MathUtils.calculateSum(times);
+        double average = MathUtils.round(MathUtils.calculateAvg(times, sum), 2);
+        double sd = MathUtils.round(MathUtils.calculateStdDev(times, average), 2);
+        double percentile90 = MathUtils.round(MathUtils.percentile(times, 90), 2);
+        double percentile99 = MathUtils.round(MathUtils.percentile(times, 99), 2);
         //
         var msg = Component.text();
         msg.append(Component.text(name).color(NamedTextColor.WHITE));

@@ -1,42 +1,39 @@
 package com.aoelite.me.worldtester.utils;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class MathUtils {
 
-    public static double calculateSD(Collection<? extends Number> numbers) {
-        return Math.sqrt(calculateVariance(numbers));
+    public static <T extends Comparable<T>> T percentile(List<T> items, double percentile) {
+        List<T> list = new ArrayList<>(items);
+        Collections.sort(list);
+        return list.get((int) Math.round(percentile / 100.0 * (list.size() - 1)));
     }
 
-    public static double calculateVariance(final Collection<? extends Number> data) {
-        int count = 0;
-        double sum = 0, variance = 0, average;
-        for (final Number number : data) {
-            sum += number.doubleValue();
-            ++count;
+    public static <T extends Number> double calculateSD(Collection<T> numbers) {
+        double sum = calculateSum(numbers);
+        double mean = calculateAvg(numbers, sum);
+        return calculateStdDev(numbers, mean);
+    }
+
+    public static <T extends Number> double calculateAvg(Collection<T> numbers, double sum) {
+        return sum / numbers.size();
+    }
+
+    public static <T extends Number> double calculateSum(Collection<T> numbers) {
+        double total = 0;
+        for (T number : numbers) {
+            total += number.doubleValue();
         }
-        average = sum / count;
-        for (final Number number : data) variance += Math.pow(number.doubleValue() - average, 2.0);
-        return variance;
+        return total;
     }
 
-
-    public static double calculateAvg(final Collection<? extends Number> numbers) {
-        return numbers.stream().mapToDouble(Number::doubleValue).average().orElse(0D);
-    }
-
-    public static <T extends Number> double getPercentile(List<T> sortedList, double percentile) {
-        double index = (percentile / 100) * (sortedList.size() - 1);
-        int lowerIndex = (int) Math.floor(index);
-        int upperIndex = (int) Math.ceil(index);
-        if (lowerIndex == upperIndex) {
-            return sortedList.get(lowerIndex).doubleValue();
-        }
-        double lowerValue = sortedList.get(lowerIndex).doubleValue();
-        double upperValue = sortedList.get(upperIndex).doubleValue();
-        double fraction = index - lowerIndex;
-        return lowerValue + (upperValue - lowerValue) * fraction;
+    public static <T extends Number> double calculateStdDev(Collection<T> numbers, double mean) {
+        double sumOfSquaredDifferences = numbers.stream().mapToDouble(num -> Math.pow(num.doubleValue() - mean, 2)).sum();
+        return Math.sqrt(sumOfSquaredDifferences / numbers.size());
     }
 
     public static double round(double number, int place) {
