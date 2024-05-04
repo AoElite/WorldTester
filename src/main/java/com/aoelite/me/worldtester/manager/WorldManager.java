@@ -124,12 +124,14 @@ public class WorldManager {
         worldUnloadTimes.clear();
     }
 
+    public final static int ROUNDING = 4;
+
     private void show(String name, List<Long> times) {
         final double sum = MathUtils.calculateSum(times);
-        double average = MathUtils.round(MathUtils.calculateAvg(times, sum), 2);
-        double sd = MathUtils.round(MathUtils.calculateStdDev(times, average), 2);
-        double percentile90 = MathUtils.round(MathUtils.percentile(times, 90), 2);
-        double percentile99 = MathUtils.round(MathUtils.percentile(times, 99), 2);
+        double average = MathUtils.round(MathUtils.calculateAvg(times, sum), ROUNDING);
+        double sd = MathUtils.round(MathUtils.calculateStdDev(times, average), ROUNDING);
+        double percentile90 = MathUtils.round(MathUtils.percentile(times, 90), ROUNDING);
+        double percentile99 = MathUtils.round(MathUtils.percentile(times, 99), ROUNDING);
         //
         var msg = Component.text();
         msg.append(Component.text(name).color(NamedTextColor.WHITE));
